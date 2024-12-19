@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 import time
 import random
 import string
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Correct path to the ChromeDriver executable
 CHROMEDRIVER_PATH = "F:/pycharm/chromedriver-win64/chromedriver-win64/chromedriver.exe"  # Use consistent forward slashes
@@ -50,11 +50,12 @@ try:
             field.send_keys(pincode)
             print(f"Field {i + 1} (Pincode) filled with: {pincode}")
         elif i == 5:  # Sixth field: Date of Birth (DOB)
-            dob = "01-01-2003"  # Example DOB
-            field.send_keys(dob)
-            print(f"Field {i + 1} (Date of Birth) filled with: {dob}")
+            # Generate a random date within a range of 18–50 years ago
+            random_date = (datetime.now() - timedelta(days=random.randint(6570, 18250))).strftime("%d-%m-%Y")
+            field.send_keys(random_date)
+            print(f"Field {i + 1} (Date of Birth) filled with: {random_date}")
         elif i == 6:  # Seventh field: Gender
-            gender = "Male" or  "Female"  # Example gender; could be "Male" or "Female"
+            gender = random.choice(["Male", "Female"])
             field.send_keys(gender)
             print(f"Field {i + 1} (Gender) filled with: {gender}")
         elif i == len(fields) - 1:  # Last field: Leave unchanged, but add a specific value
